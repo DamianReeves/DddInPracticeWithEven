@@ -21,10 +21,7 @@ namespace DddInPractice.Logic.ActorModel
                 {
                     Reject("A snackmachine has already been deployed.");
                 }
-                Persist(new SnackMachineDeployed(), evt =>
-                {
-                    Logger.Info($"SnackMachine was deployed with MoneyInside");                    
-                });
+                Persist(new SnackMachineDeployed());
                 if (cmd.MoneyInside != Money.None)
                 {
                     Persist(new ChangeSupplied(cmd.MoneyInside));
@@ -38,6 +35,7 @@ namespace DddInPractice.Logic.ActorModel
             OnEvent<SnackMachineDeployed>(evt =>
             {
                 State = new SnackMachineEntity();
+                Logger.Info($"SnackMachine created With Id:{Stream.Name}");
             });
 
             OnEvent<ChangeSupplied>(evt =>
