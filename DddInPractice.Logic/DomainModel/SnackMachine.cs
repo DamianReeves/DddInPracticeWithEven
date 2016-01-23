@@ -20,6 +20,18 @@ namespace DddInPractice.Logic.DomainModel
             MoneyInTransaction += money;
         }
 
+        public void SupplyChange(Money money)
+        {
+            //Money[] coinsAndNotes =
+            //{
+            //    Money.Cent, Money.TenCent, Money.Quarter, Money.Dollar, Money.FiveDollar, Money.TwentyDollar
+            //};
+            //if (!coinsAndNotes.Contains(money))
+            //    throw new InvalidOperationException();
+
+            MoneyInside += money;
+        }
+
         public void ReturnMoney()
         {
             MoneyInTransaction = Money.None;

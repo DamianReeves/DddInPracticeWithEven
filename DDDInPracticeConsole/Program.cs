@@ -8,6 +8,7 @@ using DddInPractice.Logic.ActorModel;
 using DddInPractice.Logic.DomainModel;
 using Even;
 using Even.Persistence;
+using Serilog;
 
 namespace DDDInPracticeConsole
 {
@@ -15,6 +16,10 @@ namespace DDDInPracticeConsole
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.LiterateConsole()
+                .CreateLogger();
+
             var actorSystem = ActorSystem.Create("SnackMachine");
             Task.Run(async () =>
             {
@@ -30,7 +35,7 @@ namespace DDDInPracticeConsole
                     gateway.SendAggregateCommand<SnackMachine>(1,
                         new SnackMachine.DeploySnackMachine(new Money(100,50,50,10,20,0))),
                     gateway.SendAggregateCommand<SnackMachine>(2,
-                        new SnackMachine.DeploySnackMachine(new Money(100, 50, 50, 10, 20, 0)))
+                        new SnackMachine.DeploySnackMachine(new Money(100, 50, 20, 25, 10, 0)))
                     );
 
                 // add some delay to make sure the data is flushed to the store 

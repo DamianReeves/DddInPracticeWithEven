@@ -21,14 +21,34 @@ namespace DddInPractice.Logic.ActorModel
                 {
                     Reject("A snackmachine has already been deployed.");
                 }
-                Persist(new SnackMachineDeployed(cmd.MoneyInside), evt =>
+                Persist(new SnackMachineDeployed(), evt =>
                 {
-                    Logger.Info($"SnackMachine was deployed with MoneyInside:{evt.MoneyInside}");                    
+                    Logger.Info($"SnackMachine was deployed with MoneyInside");                    
                 });
+                if (cmd.MoneyInside != Money.None)
+                {
+                    Persist(new ChangeSupplied(cmd.MoneyInside));
+                }
             });
             OnCommand<InsertMoney>(cmd =>
             {
                 
+            });
+
+            OnEvent<SnackMachineDeployed>(evt =>
+            {
+                State = new SnackMachineEntity();
+            });
+
+            OnEvent<ChangeSupplied>(evt =>
+            {
+                State.SupplyChange(evt.MoneyDeposited);
+                Logger.Info($"SnackMachine now contains ${State.MoneyInside.Amount}");
+            });
+
+            OnEvent<MoneyInserted>(evt =>
+            {
+                State.InsertMoney(evt.Money);
             });
         }
 

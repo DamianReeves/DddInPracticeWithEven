@@ -22,13 +22,17 @@ namespace DddInPractice.Logic.ActorModel
         }
 
         public class SnackMachineDeployed
-        {           
-            public SnackMachineDeployed(Money moneyInside)
+        {                       
+        }
+
+        public class ChangeSupplied
+        {
+            public ChangeSupplied(Money moneyDeposited)
             {
-                MoneyInside = moneyInside;
+                MoneyDeposited = moneyDeposited;
             }
 
-            public Money MoneyInside { get; }
+            public Money MoneyDeposited { get; }
         }
 
         public class InsertMoney
